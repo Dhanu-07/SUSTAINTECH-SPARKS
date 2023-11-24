@@ -1,0 +1,53 @@
+#include <LiquidCrystal.h>
+
+const int sensorPin1 = A0;
+
+const int ledPin = 7;
+const int vout=8;
+
+const int pressureThreshold = 500;
+
+// Replace these pins with the actual pins you connect your LCD to
+const int rs = 12;
+const int en = 11;
+const int d4 = 5;
+const int d5 = 4;
+const int d6 = 3;
+const int d7 = 2;
+
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+
+  // Initialize the LCD
+  lcd.begin(16, 2);
+  lcd.print("Line Voltage:");
+}
+
+void loop() {
+  int sensorValue1 = analogRead(sensorPin1);
+
+
+  Serial.print("Sensor Values: ");
+
+
+  if (sensorValue1 > pressureThreshold ) {
+    digitalWrite(ledPin, HIGH);
+    digitalRead(vout);
+    if(vout)
+      {
+        float lineVoltage = vout;
+    lcd.setCursor(0, 1);
+  lcd.print("Voltage: ");
+  lcd.print(lineVoltage);
+  lcd.print("V ");
+      }
+
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+delay(1000);
+  
+}
